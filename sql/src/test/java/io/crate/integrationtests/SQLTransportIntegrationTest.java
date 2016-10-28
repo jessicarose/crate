@@ -108,11 +108,6 @@ public abstract class SQLTransportIntegrationTest extends ESIntegTestCase {
             .build();
     }
 
-    @Before
-    public void initDriver() throws Exception {
-        Class.forName("org.postgresql.Driver");
-    }
-
     @Override
     protected Collection<Class<? extends Plugin>> nodePlugins() {
         return pluginList(BlobPlugin.class, SQLPlugin.class, CrateCorePlugin.class);
@@ -140,7 +135,7 @@ public abstract class SQLTransportIntegrationTest extends ESIntegTestCase {
                     Iterator<InetSocketTransportAddress> addressIter = postgresNetty.boundAddresses().iterator();
                     if (addressIter.hasNext()) {
                         InetSocketTransportAddress address = addressIter.next();
-                        return String.format(Locale.ENGLISH, "jdbc:postgresql://%s:%d/",
+                        return String.format(Locale.ENGLISH, "crate://%s:%d/",
                             address.getHost(), address.getPort());
                     }
                     return null;
